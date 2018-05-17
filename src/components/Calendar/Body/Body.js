@@ -58,7 +58,7 @@ class Body extends Component {
                 const topPosition = item.start_hour * topMultiplier;
                 const { patient } = item;
                 return (
-                    <a href="">
+                    <a key={`${day_number}_${i}`} href="">
                         <div className="event q4 past" draggable="true" style={{top: `${topPosition}px`}} onDragEnter={e =>this.onDragEnter(e, item)}>
                             <p className="hours">{this.getHour(item.start_hour)} - {this.getHour(item.start_hour + 1)}</p>
                             <p className="description">{patient.salutation} {patient.firstname} {patient.lastname}</p>
