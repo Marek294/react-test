@@ -4,8 +4,8 @@ import Event from '../../Event/Event';
 class Day extends Component {
     getHour(hour) {
         const timeHour = hour + 8;
-        const from = hour + 8 >= 10 ? `${timeHour}:00` : `0${timeHour}:00`;
-        const to = hour + 9 >= 10 ? `${timeHour}:00` : `0${timeHour}:00`;
+        const from = timeHour >= 10 ? `${timeHour}:00` : `0${timeHour}:00`;
+        const to = timeHour+1 >= 10 ? `${timeHour+1}:00` : `0${timeHour+1}:00`;
 
         return `${from} - ${to}`; 
     }
