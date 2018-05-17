@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import TableRow from '../TableRow/TableRow';
+import TableHeader from '../TableHeader/TableHeader';
 import './Body.css';
 
 class Body extends Component {
@@ -14,13 +16,12 @@ class Body extends Component {
 
     onDrop = (e) => {
         e.preventDefault();
+        e.stopPropagation();
         const { currentItem } = this.state;
         const topMultiplier = 132;
-        const topStart = 200;
-        const { table, events } = this.refs;
         const day_number = parseInt(e.target.dataset.day, 10);
         
-        if(!e.target.className.includes('event') && currentItem.id) {
+        if(e.target.className.includes('day') && currentItem.id) {
 
             const start_hour = parseInt(e.nativeEvent.layerY / topMultiplier, 10);
             //const start_hour = parseInt((table.scrollTop+e.screenY-topStart) / topMultiplier, 10);
@@ -40,9 +41,12 @@ class Body extends Component {
     }
 
     onDragEnter = (e, currentItem) => {
-        this.setState({
-            currentItem
-        })
+        const { currentItem : stateItem } = this.state;
+
+        if(!stateItem.id)
+            this.setState({
+                currentItem
+            })
     }
 
     onDragOver = e => {
@@ -52,7 +56,7 @@ class Body extends Component {
     renderDay = (CalendarDataObj, day_number) => {
         const topMultiplier = 132;
 
-        return CalendarDataObj
+        const display = CalendarDataObj
             .filter(item => item.day_number === day_number)
             .map((item, i) => {
                 const topPosition = item.start_hour * topMultiplier;
@@ -67,188 +71,50 @@ class Body extends Component {
                     </a>
                 )
             })
+
+        return (
+            <div className="day" onDragOver={this.onDragOver} onDrop={this.onDrop} data-day={day_number}>
+                {display}
+            </div>
+        )
+    }
+
+    renderDays = (CalendarDataObj) => {
+        return [
+            this.renderDay(CalendarDataObj, 1),
+            this.renderDay(CalendarDataObj, 2),
+            this.renderDay(CalendarDataObj, 3),
+            this.renderDay(CalendarDataObj, 4),
+            this.renderDay(CalendarDataObj, 5),
+            this.renderDay(CalendarDataObj, 6),
+            this.renderDay(CalendarDataObj, 7),
+        ]
     }
 
     render() {
         const { CalendarDataObj } = this.props;
 
-        const displayDay1 = this.renderDay(CalendarDataObj, 1);
-        const displayDay2 = this.renderDay(CalendarDataObj, 2);
-        const displayDay3 = this.renderDay(CalendarDataObj, 3);
-        const displayDay4 = this.renderDay(CalendarDataObj, 4);
-        const displayDay5 = this.renderDay(CalendarDataObj, 5);
-        const displayDay6 = this.renderDay(CalendarDataObj, 6);
-        const displayDay7 = this.renderDay(CalendarDataObj, 7);
-
         return (
-            <div ref="table" className="table">
-                <div ref="events" className="events" >
-                    <div className="day" onDragOver={this.onDragOver} onDrop={this.onDrop} data-day="1">
-                        {displayDay1}
-                    </div>
-                    <div className="day" onDragOver={this.onDragOver} onDrop={this.onDrop} data-day="2">
-                        {displayDay2}
-                    </div>
-                    <div className="day" onDragOver={this.onDragOver} onDrop={this.onDrop} data-day="3">
-                        {displayDay3}
-                    </div>
-                    <div className="day" onDragOver={this.onDragOver} onDrop={this.onDrop} data-day="4">
-                        {displayDay4}
-                    </div>
-                    <div className="day" onDragOver={this.onDragOver} onDrop={this.onDrop} data-day="5">
-                        {displayDay5}
-                    </div>
-                    <div className="day" onDragOver={this.onDragOver} onDrop={this.onDrop} data-day="6">
-                        {displayDay6}
-                    </div>
-                    <div className="day" onDragOver={this.onDragOver} onDrop={this.onDrop} data-day="7">
-                        {displayDay7}
-                    </div>
+            <div className="table">
+                <div className="events" >
+                    {this.renderDays(CalendarDataObj)}
                 </div>
                 <table>
-                    <thead>
-                        <tr>
-                            <td>Uhrzeit</td>
-                            <td>Mo 09.11.</td>
-                            <td>Di 10.11.</td>
-                            <td className="active">Mi 11.11.</td>
-                            <td>Do 12.11.</td>
-                            <td>Fr 13.11.</td>
-                            <td className="free" >Sa 14.11.</td>
-                            <td className="free" >So 15.11.</td>
-                        </tr>
-                    </thead>
+                    <TableHeader />
                     <tbody>
-                        <tr>
-                            <td className="hour">08:00</td>
-                            <td ></td>
-                            <td ></td>
-                            <td className="active"></td>
-                            <td ></td>
-                            <td ></td>
-                            <td ></td>
-                            <td ></td>
-                        </tr>
-                        <tr>
-                            <td className="hour">09:00</td>
-                            <td></td>
-                            <td></td>
-                            <td className="active"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td className="hour">10:00</td>
-                            <td></td>
-                            <td></td>
-                            <td className="active"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td className="hour">11:00</td>
-                            <td></td>
-                            <td></td>
-                            <td className="active"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td className="hour">12:00</td>
-                            <td></td>
-                            <td></td>
-                            <td className="active"></td>
-                            <td></td>
-                            <td ></td>
-                            <td ></td>
-                            <td ></td>
-                        </tr>
-                        <tr>
-                            <td className="hour">13:00</td>
-                            <td></td>
-                            <td></td>
-                            <td className="active"></td>
-                            <td ></td>
-                            <td ></td>
-                            <td ></td>
-                            <td ></td>
-                        </tr>
-                        <tr>
-                            <td className="hour">14:00</td>
-                            <td></td>
-                            <td></td>
-                            <td className="active"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td className="hour">15:00</td>
-                            <td></td>
-                            <td></td>
-                            <td className="active"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td className="hour">16:00</td>
-                            <td></td>
-                            <td></td>
-                            <td className="active"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td className="hour">17:00</td>
-                            <td></td>
-                            <td></td>
-                            <td className="active"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td className="hour">18:00</td>
-                            <td></td>
-                            <td></td>
-                            <td className="active"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td className="hour">19:00</td>
-                            <td></td>
-                            <td></td>
-                            <td className="active"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td className="hour">20:00</td>
-                            <td></td>
-                            <td></td>
-                            <td className="active"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        <TableRow time="08:00"/>
+                        <TableRow time="09:00"/>
+                        <TableRow time="10:00"/>
+                        <TableRow time="11:00"/>
+                        <TableRow time="12:00"/>
+                        <TableRow time="13:00"/>
+                        <TableRow time="14:00"/>
+                        <TableRow time="15:00"/>
+                        <TableRow time="16:00"/>
+                        <TableRow time="17:00"/>
+                        <TableRow time="18:00"/>
+                        <TableRow time="19:00"/>
+                        <TableRow time="20:00"/>
                     </tbody>
                 </table>
             </div>
