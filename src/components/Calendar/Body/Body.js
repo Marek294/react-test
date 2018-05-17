@@ -15,29 +15,31 @@ class Body extends Component {
     onDrop = (e) => {
         e.preventDefault();
         const { currentItem } = this.state;
-        const topMultiplier = 120;
-        const topStart = 243;
-        const { table } = this.refs;
-        const day_number = parseInt(e.target.dataset.day);
+        const topMultiplier = 132;
+        const topStart = 200;
+        const { table, events } = this.refs;
+        const day_number = parseInt(e.target.dataset.day, 10);
+        
+        if(!e.target.className.includes('event')) {
+            console.log(e.nativeEvent);
+            const start_hour = parseInt(e.nativeEvent.layerY / topMultiplier, 10);
+            //const start_hour = parseInt((table.scrollTop+e.screenY-topStart) / topMultiplier, 10);
 
-        console.log(table.scrollTop, e.screenY);
+            const changedItem = {
+                ...currentItem,
+                start_hour,
+                day_number
+            }
 
-        const start_hour = parseInt((table.scrollTop+e.screenY-topStart) / topMultiplier);
-
-        const changedItem = {
-            ...currentItem,
-            start_hour,
-            day_number
+            this.props.onEventEdit(e, changedItem);
         }
-
-        this.props.onEventEdit(e, changedItem);
         
         this.setState({
             currentItem: {}
         })
     }
 
-    onDragEnter = (currentItem) => {
+    onDragEnter = (e, currentItem) => {
         this.setState({
             currentItem
         })
@@ -57,7 +59,7 @@ class Body extends Component {
                 const { patient } = item;
                 return (
                     <a href="">
-                        <div className="event q4 past" draggable="true" style={{top: `${topPosition}px`}} onDragEnter={() => this.onDragEnter(item)}>
+                        <div className="event q4 past" draggable="true" style={{top: `${topPosition}px`}} onDragEnter={e =>this.onDragEnter(e, item)}>
                             <p className="hours">{this.getHour(item.start_hour)} - {this.getHour(item.start_hour + 1)}</p>
                             <p className="description">{patient.salutation} {patient.firstname} {patient.lastname}</p>
                             <span className="icon"></span>
@@ -80,7 +82,7 @@ class Body extends Component {
 
         return (
             <div ref="table" className="table">
-                <div className="events" >
+                <div ref="events" className="events" >
                     <div className="day" onDragOver={this.onDragOver} onDrop={this.onDrop} data-day="1">
                         {displayDay1}
                     </div>
