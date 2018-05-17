@@ -18,7 +18,7 @@ class Body extends Component {
         const topMultiplier = 120;
         const topStart = 243;
         const { table } = this.refs;
-        const day = e.target.dataset.day;
+        const day_number = parseInt(e.target.dataset.day);
 
         console.log(table.scrollTop, e.screenY);
 
@@ -26,7 +26,8 @@ class Body extends Component {
 
         const changedItem = {
             ...currentItem,
-            start_hour
+            start_hour,
+            day_number
         }
 
         this.props.onEventEdit(e, changedItem);
@@ -46,23 +47,36 @@ class Body extends Component {
         e.preventDefault();
     }
 
-    render() {
-        const { CalendarDataObj } = this.props;
+    renderDay = (CalendarDataObj, day_number) => {
         const topMultiplier = 132;
 
-        const displayDay1 = CalendarDataObj.map((item, i) => {
-            const topPosition = item.start_hour * topMultiplier;
-            const { patient } = item;
-            return (
-                <a href="">
-                    <div className="event q4 past" draggable="true" style={{top: `${topPosition}px`}} onDragEnter={() => this.onDragEnter(item)}>
-                        <p className="hours">{this.getHour(item.start_hour)} - {this.getHour(item.start_hour + 1)}</p>
-                        <p className="description">{patient.salutation} {patient.firstname} {patient.lastname}</p>
-                        <span className="icon"></span>
-                    </div>
-                </a>
-            )
-        })
+        return CalendarDataObj
+            .filter(item => item.day_number === day_number)
+            .map((item, i) => {
+                const topPosition = item.start_hour * topMultiplier;
+                const { patient } = item;
+                return (
+                    <a href="">
+                        <div className="event q4 past" draggable="true" style={{top: `${topPosition}px`}} onDragEnter={() => this.onDragEnter(item)}>
+                            <p className="hours">{this.getHour(item.start_hour)} - {this.getHour(item.start_hour + 1)}</p>
+                            <p className="description">{patient.salutation} {patient.firstname} {patient.lastname}</p>
+                            <span className="icon"></span>
+                        </div>
+                    </a>
+                )
+            })
+    }
+
+    render() {
+        const { CalendarDataObj } = this.props;
+
+        const displayDay1 = this.renderDay(CalendarDataObj, 1);
+        const displayDay2 = this.renderDay(CalendarDataObj, 2);
+        const displayDay3 = this.renderDay(CalendarDataObj, 3);
+        const displayDay4 = this.renderDay(CalendarDataObj, 4);
+        const displayDay5 = this.renderDay(CalendarDataObj, 5);
+        const displayDay6 = this.renderDay(CalendarDataObj, 6);
+        const displayDay7 = this.renderDay(CalendarDataObj, 7);
 
         return (
             <div ref="table" className="table">
@@ -71,22 +85,22 @@ class Body extends Component {
                         {displayDay1}
                     </div>
                     <div className="day" onDragOver={this.onDragOver} onDrop={this.onDrop} data-day="2">
-
+                        {displayDay2}
                     </div>
                     <div className="day" onDragOver={this.onDragOver} onDrop={this.onDrop} data-day="3">
-
+                        {displayDay3}
                     </div>
                     <div className="day" onDragOver={this.onDragOver} onDrop={this.onDrop} data-day="4">
-
+                        {displayDay4}
                     </div>
                     <div className="day" onDragOver={this.onDragOver} onDrop={this.onDrop} data-day="5">
-
+                        {displayDay5}
                     </div>
                     <div className="day" onDragOver={this.onDragOver} onDrop={this.onDrop} data-day="6">
-
+                        {displayDay6}
                     </div>
                     <div className="day" onDragOver={this.onDragOver} onDrop={this.onDrop} data-day="7">
-
+                        {displayDay7}
                     </div>
                 </div>
                 <table>
