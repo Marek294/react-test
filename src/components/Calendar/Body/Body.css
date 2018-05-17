@@ -1,0 +1,153 @@
+.table {
+    width: 781px;
+    height: 714px;
+    overflow: hidden;
+    position: relative; 
+    overflow: scroll;
+}
+
+.table .events {
+    position: absolute;
+    top: 34px;
+    left: 111px;
+    width: 749px; 
+
+}
+
+.table .events .day {
+    float: left;
+    margin-right: 1px;
+    width: 110px;
+    height: 714px;
+}
+
+.table .event {
+    position: absolute;
+    width: 107px;
+    border: 1px solid white;
+    font-size: 0.75em; 
+}
+
+.table .event.q1 {
+    height: 33px; 
+}
+
+.table .event.q2 {
+    height: 66px; 
+}
+
+.table .event.q3 {
+    height: 99px; 
+}
+
+.table .event.q4 {
+    height: 132px; 
+}
+
+.table .event.past {
+    background: #d6ecff; 
+}
+
+.table .event.past .icon {
+    background-position: 0 -13px; 
+}
+
+.table .event.present {
+    background: #fdd466; 
+}
+
+.table .event.present .icon {
+    background-position: 0 0; 
+}
+
+.table .event.future {
+    background: #93d7fb; 
+}
+
+.table .event.future .icon {
+    background-position: 0 13px; 
+}
+
+.table .event.empty {
+    background: none;
+    border: 0; 
+}
+
+.table .event .hours,  .table .event .description {
+    margin: 1px 0 0 1px; 
+}
+
+.table .event .icon {
+    position: absolute;
+    display: block;
+    right: 3px;
+    bottom: 4px;
+    opacity: 0.7;
+    cursor: pointer;
+    background-image: url(../../../img/icons-sprite.png);
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 13px; 
+}
+
+.table .event .icon:hover {
+    background-position: 0 -26px; 
+}
+
+table { 
+    border-spacing: 0px;
+}
+
+table thead tr {
+    height: 33px;
+}
+
+table thead td {
+    text-align: center;
+    line-height: 33px;
+    border-top: 0; 
+    margin: 5px;
+}
+
+table thead td.active {
+    background: #f2f2f2; 
+}
+
+table thead td.free {
+    color: rgba(0, 0, 0, 0.5); 
+}
+
+table tbody tr {
+    height: 132px; 
+    padding: 0;
+}
+
+table tbody tr:nth-child(even) td.active {
+    background: #f2f2f2; 
+}
+
+table tbody tr:nth-child(odd) td.active {
+    background: #edecec; 
+}
+
+table tbody td {
+    vertical-align: top; 
+    padding: 0;
+}
+
+table tbody .hour {
+    padding-top: 8px;
+    vertical-align: top;
+    text-align: center; 
+}
+table td {
+    border: 1px solid #ebebeb;
+    min-width: 107px; 
+}
+table td:first-of-type {
+    border-left: 0; 
+}
+
+table .hour {
+    font-size: 0.9em; 
+}
