@@ -20,8 +20,8 @@ class Body extends Component {
         const { table, events } = this.refs;
         const day_number = parseInt(e.target.dataset.day, 10);
         
-        if(!e.target.className.includes('event')) {
-            console.log(e.nativeEvent);
+        if(!e.target.className.includes('event') && currentItem.id) {
+
             const start_hour = parseInt(e.nativeEvent.layerY / topMultiplier, 10);
             //const start_hour = parseInt((table.scrollTop+e.screenY-topStart) / topMultiplier, 10);
 
