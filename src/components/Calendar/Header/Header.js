@@ -3,15 +3,15 @@ import './Header.css';
 
 const Header = () => {
     return (
-        <div class="header">
+        <div className="header">
             <h2>Terminplaner</h2>
-            <div class="header__control">
-                <span class="control__prev">&lt;</span>
-                <span class="control__date">9 &mdash; 15. November 2015 </span>
-                <span class="conrol__next">&gt;</span>
+            <div className="header__control">
+                <span className="control__prev">&lt;</span>
+                <span className="control__date">9 &mdash; 15. November 2015 </span>
+                <span className="conrol__next">&gt;</span>
             </div>
-            <span class="header__month"></span>
-            <span class="header__slider"></span>
+            <span className="header__month"></span>
+            <span className="header__slider"></span>
         </div>
     );
 };

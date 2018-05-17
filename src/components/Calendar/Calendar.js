@@ -7,13 +7,13 @@ class Calendar extends Component {
     state = {
         calendarData: [
             {
-              "id": 1,
-              "doctor": {
+            "id": 1,
+            "doctor": {
                 "account_id": 7,
                 "id": 1,
                 "title": "Blue Walker"
-              },
-              "patient": {
+            },
+            "patient": {
                 "id": 2,
                 "salutation": "Mrs.",
                 "firstname": "Anna",
@@ -22,20 +22,37 @@ class Calendar extends Component {
                 "notify_email": false,
                 "notify_sms": false,
                 "language": "de"
-              },
-              "start_time": "2015-11-11 09:00:00",
-              "end_time": "2015-11-11 10:00:00",
-              "start_hour": 0,
-              "day_number": 1
+            },
+            "start_time": "2015-11-11 09:00:00",
+            "end_time": "2015-11-11 10:00:00",
+            "start_hour": 0,
+            "day_number": 1
             }
-          ]
+        ]
+    }
+
+    onEventEditCallback = (e, changedItem) => {
+        const { calendarData } = this.state;
+
+        const changedIndex = calendarData.findIndex( item => item.id === changedItem.id);
+
+        this.setState({
+            calendarData: [
+                ...this.state.calendarData.slice(0,changedIndex),
+                changedItem,
+                ...this.state.calendarData.slice(changedIndex+1)
+            ]
+        })
+
     }
 
     render() {
+        const { calendarData } = this.state;
+
         return (
             <div className='calendar'>
                 <CalendarHeader />
-                <CalendarBody />
+                <CalendarBody CalendarDataObj={calendarData} onEventEdit={this.onEventEditCallback}/>
             </div>
         );
     }
