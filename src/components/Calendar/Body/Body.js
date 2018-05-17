@@ -5,7 +5,20 @@ import './Body.css';
 
 class Body extends Component {
     state = {
-        currentItem: {}
+        currentItem: {},
+        isDragging: false
+    }
+
+    componentDidMount () {
+        window.addEventListener("dragover",function(e){
+            e.preventDefault();
+        },false);
+        window.addEventListener("drop",e => {
+            e.preventDefault();
+            this.setState({
+                currentItem: {}
+        })
+          },false);
     }
 
     getHour(hour) {
