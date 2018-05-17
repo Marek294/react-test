@@ -142,7 +142,7 @@ table tbody .hour {
 }
 table td {
     border: 1px solid #ebebeb;
-    min-width: 107px; 
+    min-width: 106.5px; 
 }
 table td:first-of-type {
     border-left: 0; 
