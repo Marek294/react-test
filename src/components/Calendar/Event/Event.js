@@ -8,12 +8,14 @@ const getHour = hour => {
     return `${from} - ${to}`;
 }
 
+const onDragStart = (e, id) => e.dataTransfer.setData('id', id);
+
 const Event = (props) => {
-    const { item, topPosition, onDragStart } = props;
+    const { item, topPosition } = props;
     const { patient } = item;
 
     return (
-        <a href="" onDragStart={(e) => onDragStart(e,item.id)}>
+        <a href="" onDragStart={e => onDragStart(e,item.id)}>
             <div className="event q4 past" draggable style={{top: `${topPosition}px`}} >
                 <p className="hours">{getHour(item.start_hour)}</p>
                 <p className="description">{patient.salutation} {patient.firstname} {patient.lastname}</p>

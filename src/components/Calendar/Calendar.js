@@ -53,11 +53,11 @@ class Calendar extends Component {
         ]
     }
 
-    onEventEditCallback = (e, changedItem) => {
+    onEventEditCallback = (e, changeData) => {
         const { calendarData } = this.state;
-        const { start_hour, day_number } = changedItem;
+        const { start_hour, day_number } = changeData;
 
-        const changedIndex = calendarData.findIndex( item => item.id === changedItem.id);
+        const changedIndex = calendarData.findIndex( item => item.id === changeData.id);
 
         const saveItem = Object.assign(calendarData[changedIndex], { start_hour, day_number });
 

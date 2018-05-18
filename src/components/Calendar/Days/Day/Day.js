@@ -4,8 +4,6 @@ import Event from '../../Event/Event';
 class Day extends Component {
     onDragOver = e => e.preventDefault();
 
-    onDragStart = (e, id) => e.dataTransfer.setData('id', id);
-
     onDrop = e => {
         e.preventDefault();
         const itemId = parseInt(e.dataTransfer.getData('id'),10);
@@ -15,13 +13,13 @@ class Day extends Component {
             
             const start_hour = parseInt(e.nativeEvent.layerY / topMultiplier, 10);
 
-            const changedItem = {
+            const changeData = {
                 id: itemId,
                 start_hour,
                 day_number
             }
             
-            this.props.onEventEdit(e, changedItem);
+            this.props.onEventEdit(e, changeData);
         }
     }
 
@@ -34,7 +32,6 @@ class Day extends Component {
             .map((item, i) => (
                 <Event key={i}
                     topPosition={item.start_hour * topMultiplier}
-                    onDragStart={this.onDragStart}
                     item={item} />
             )
             )
