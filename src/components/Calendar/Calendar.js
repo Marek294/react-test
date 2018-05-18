@@ -55,13 +55,16 @@ class Calendar extends Component {
 
     onEventEditCallback = (e, changedItem) => {
         const { calendarData } = this.state;
+        const { start_hour, day_number } = changedItem;
 
         const changedIndex = calendarData.findIndex( item => item.id === changedItem.id);
+
+        const saveItem = Object.assign(calendarData[changedIndex], { start_hour, day_number });
 
         this.setState({
             calendarData: [
                 ...this.state.calendarData.slice(0,changedIndex),
-                changedItem,
+                saveItem,
                 ...this.state.calendarData.slice(changedIndex+1)
             ]
         })

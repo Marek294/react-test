@@ -2,32 +2,45 @@ import React, { Component } from 'react';
 import Event from '../../Event/Event';
 
 class Day extends Component {
-    getHour(hour) {
-        const timeHour = hour + 8;
-        const from = timeHour >= 10 ? `${timeHour}:00` : `0${timeHour}:00`;
-        const to = timeHour+1 >= 10 ? `${timeHour+1}:00` : `0${timeHour+1}:00`;
+    onDragOver = e => e.preventDefault();
 
-        return `${from} - ${to}`; 
+    onDragStart = (e, id) => e.dataTransfer.setData('id', id);
+
+    onDrop = e => {
+        e.preventDefault();
+        const itemId = parseInt(e.dataTransfer.getData('id'),10);
+        const topMultiplier = 132;
+        const day_number = parseInt(e.target.dataset.day, 10);
+        if(e.target.className.includes('day')) {
+            
+            const start_hour = parseInt(e.nativeEvent.layerY / topMultiplier, 10);
+
+            const changedItem = {
+                id: itemId,
+                start_hour,
+                day_number
+            }
+            
+            this.props.onEventEdit(e, changedItem);
+        }
     }
 
     render() {
-        const { CalendarDataObj, day_number, onDragEnter, onDragOver, onDrop } = this.props;
+        const { CalendarDataObj, day_number } = this.props;
         const topMultiplier = 132;
 
         const display = CalendarDataObj
             .filter(item => item.day_number === day_number)
-            .map((item, i) => {
-                const topPosition = item.start_hour * topMultiplier;
-
-                return (<Event  key={i}
-                                topPosition={topPosition}
-                                onDragEnter={onDragEnter}
-                                item={item}
-                                getHour={() => this.getHour(item.start_hour)} />)
-            })
+            .map((item, i) => (
+                <Event key={i}
+                    topPosition={item.start_hour * topMultiplier}
+                    onDragStart={this.onDragStart}
+                    item={item} />
+            )
+            )
 
         return (
-            <div className="day" onDragOver={onDragOver} onDrop={onDrop} data-day={day_number}>
+            <div className="day" onDragOver={this.onDragOver} onDrop={this.onDrop} data-day={day_number}>
                 {display}
             </div>
         )

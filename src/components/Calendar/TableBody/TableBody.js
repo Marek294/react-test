@@ -16,7 +16,7 @@ const TableBody = () => {
                 '17:00', 
                 '18:00', 
                 '19:00', 
-                '20:00'].map(time => <TableRow time={time} />)}
+                '20:00'].map((time,i) => <TableRow key={i} time={time} />)}
         </tbody>
     );
 };
